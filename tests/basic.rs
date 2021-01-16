@@ -26,8 +26,8 @@ fn default_petnames_has_names() {
 
 #[test]
 fn retain_applies_given_predicate() {
-    let petnames_expected = Petnames::init("bob", "bob", "bob jane");
-    let mut petnames = Petnames::init("alice bob carol", "alice bob", "bob carol jane");
+    let petnames_expected = Petnames::new("bob", "bob", "bob jane");
+    let mut petnames = Petnames::new("alice bob carol", "alice bob", "bob carol jane");
     petnames.retain(|word| word.len() < 5);
     assert_eq!(petnames_expected, petnames);
 }
@@ -72,7 +72,7 @@ fn petname_renders_with_desired_separator() {
 #[test]
 fn petnames_iter_has_cardinality() {
     let mut rng = StepRng::new(0, 1);
-    let petnames = Petnames::init("a b", "c d e", "f g h i");
+    let petnames = Petnames::new("a b", "c d e", "f g h i");
     let names = petnames.iter(&mut rng, 3, ".");
     assert_eq!(24u128, names.cardinality());
 }
@@ -80,7 +80,7 @@ fn petnames_iter_has_cardinality() {
 #[test]
 fn petnames_iter_yields_names() {
     let mut rng = StepRng::new(0, 1);
-    let petnames = Petnames::init("foo", "bar", "baz");
+    let petnames = Petnames::new("foo", "bar", "baz");
     let names = petnames.iter(&mut rng, 3, ".");
     // Definintely an Iterator...
     let mut iter: Box<dyn Iterator<Item = _>> = Box::new(names);
