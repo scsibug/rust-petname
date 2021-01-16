@@ -12,8 +12,8 @@ use rand::seq::SliceRandom;
 
 /// Convenience function to generate a new petname from default word lists.
 #[allow(dead_code)]
-#[cfg(feature = "std_rng")]
-#[cfg(feature = "default_dictionary")]
+#[cfg(feature = "default-rng")]
+#[cfg(feature = "default-words")]
 pub fn petname(words: u8, separator: &str) -> String {
     Petnames::new().generate_one(words, separator)
 }
@@ -44,7 +44,7 @@ impl<'a> Petnames<'a> {
     }
 
     /// Constructs a new `Petnames` from the small word lists.
-    #[cfg(feature = "default_dictionary")]
+    #[cfg(feature = "default-words")]
     pub fn small() -> Self {
         Self::init(
             include_str!("../words/small/adjectives.txt"),
@@ -54,7 +54,7 @@ impl<'a> Petnames<'a> {
     }
 
     /// Constructs a new `Petnames` from the medium word lists.
-    #[cfg(feature = "default_dictionary")]
+    #[cfg(feature = "default-words")]
     pub fn medium() -> Self {
         Self::init(
             include_str!("../words/medium/adjectives.txt"),
@@ -64,7 +64,7 @@ impl<'a> Petnames<'a> {
     }
 
     /// Constructs a new `Petnames` from the large word lists.
-    #[cfg(feature = "default_dictionary")]
+    #[cfg(feature = "default-words")]
     pub fn large() -> Self {
         Self::init(
             include_str!("../words/large/adjectives.txt"),
@@ -89,12 +89,12 @@ impl<'a> Petnames<'a> {
     /// # Examples
     ///
     /// ```rust
-    /// # #[cfg(feature = "default_dictionary")]
+    /// # #[cfg(feature = "default-words")]
     /// let mut petnames = petname::Petnames::default();
-    /// # #[cfg(feature = "default_dictionary")]
+    /// # #[cfg(feature = "default-words")]
     /// petnames.retain(|s| s.starts_with("b"));
-    /// # #[cfg(feature = "default_dictionary")]
-    /// # #[cfg(feature = "std_rng")]
+    /// # #[cfg(feature = "default-words")]
+    /// # #[cfg(feature = "default-rng")]
     /// petnames.generate_one(2, ".");
     /// ```
     ///
@@ -130,9 +130,9 @@ impl<'a> Petnames<'a> {
     /// # Examples
     ///
     /// ```rust
-    /// # #[cfg(all(feature = "std_rng", feature = "default_dictionary"))]
+    /// # #[cfg(all(feature = "default-rng", feature = "default-words"))]
     /// let mut rng = rand::thread_rng();
-    /// # #[cfg(all(feature = "std_rng", feature = "default_dictionary"))]
+    /// # #[cfg(all(feature = "default-rng", feature = "default-words"))]
     /// petname::Petnames::default().generate(&mut rng, 7, ":");
     /// ```
     ///
@@ -158,7 +158,7 @@ impl<'a> Petnames<'a> {
     /// This is like `generate` but uses `rand::thread_rng` as the random
     /// source. For efficiency use `generate` when creating multiple names, or
     /// when you want to use a custom source of randomness.
-    #[cfg(feature = "std_rng")]
+    #[cfg(feature = "default-rng")]
     pub fn generate_one(&self, words: u8, separator: &str) -> String {
         self.generate(&mut rand::thread_rng(), words, separator)
     }
@@ -168,13 +168,13 @@ impl<'a> Petnames<'a> {
     /// # Examples
     ///
     /// ```rust
-    /// # #[cfg(all(feature = "std_rng", feature = "default_dictionary"))]
+    /// # #[cfg(all(feature = "default-rng", feature = "default-words"))]
     /// let mut rng = rand::thread_rng();
-    /// # #[cfg(all(feature = "std_rng", feature = "default_dictionary"))]
+    /// # #[cfg(all(feature = "default-rng", feature = "default-words"))]
     /// let petnames = petname::Petnames::default();
-    /// # #[cfg(all(feature = "std_rng", feature = "default_dictionary"))]
+    /// # #[cfg(all(feature = "default-rng", feature = "default-words"))]
     /// let mut iter = petnames.iter(&mut rng, 4, "_");
-    /// # #[cfg(all(feature = "std_rng", feature = "default_dictionary"))]
+    /// # #[cfg(all(feature = "default-rng", feature = "default-words"))]
     /// println!("name: {}", iter.next().unwrap());
     /// ```
     ///
@@ -191,7 +191,7 @@ impl<'a> Petnames<'a> {
     }
 }
 
-#[cfg(feature = "default_dictionary")]
+#[cfg(feature = "default-words")]
 impl<'a> Default for Petnames<'a> {
     fn default() -> Self {
         Self::small()
